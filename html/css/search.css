@@ -1,0 +1,7 @@
+.thumbnail {
+  display: inline-block; /* ここがポイント */
+  height: 180px;
+}
+.thumbnail img {
+  height: 100%;
+}

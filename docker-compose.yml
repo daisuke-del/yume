@@ -1,0 +1,49 @@
+version: '3'
+services:
+  web:
+    image: httpd
+    depends_on:
+      - app
+    networks:
+      - yume000net1
+    volumes:
+      - apa000vol3:/usr/local/apache2/htdocs/
+    ports:
+      - "8093:80"
+  app:
+    build:
+      context: ./docker-php
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    networks:
+      - yume000net1
+    volumes:
+      - ~/dockers/com_folder3/html:/var/www/html
+    ports:
+      - "8094:80"
+    restart: always
+  db:
+    build:
+      context: ./docker-mysql
+      dockerfile: Dockerfile
+    platform: linux/x86_64
+    ports:
+      - "3306:3306"
+    networks:
+      - yume000net1
+    volumes:
+      - mysql000vol3:/var/lib/mysql
+      - ./docker-mysql/my.cnf:/etc/my.cnf
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOTPASS}
+      MYSQL_DATABASE: ${DATABASE}
+      MYSQL_USER: ${USER}
+      MYSQL_PASSWORD: ${USERPASS}
+networks:
+  yume000net1:
+volumes:
+  mysql000vol3:
+  apa000vol3:
+  
